@@ -1,0 +1,128 @@
+package br.com.mapa.controller;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import br.com.mapa.dao.FormaDao;
+import br.com.mapa.model.Forma;
+
+@Transactional
+@Controller
+public class MapaController {
+
+	@Autowired
+	FormaDao formaDao;
+
+	@RequestMapping("mostrarMapa")
+	public String mostrarMapa(String form, Model model) {
+		if (form != null && !form.equals("")) {
+			model.addAttribute("form", form);
+		}
+		return "mapa/mostra";
+	}
+
+	@RequestMapping("adicionarPonto")
+	public String adicionarPonto(@Valid Forma forma, BindingResult result) {
+		if (result.hasErrors()) {
+			return "mapa/pontoErro";
+		}
+		formaDao.salvar(forma);
+		return "mapa/pontoAdicionado";
+	}
+
+	@RequestMapping("mostrarTodosPontos")
+	public String mostrarTodosPontos(Model model) {
+		List<Forma> pontos = formaDao.getListaPonto();
+		String pontosJSON;
+		int i = 0;
+		pontosJSON = "[";
+		for (Forma ponto : pontos) {
+			i++;
+			if (!ponto.getEndereco1().equals("") && ponto.getEndereco1() != null) {
+				if (pontos.size() == i) {
+					pontosJSON += "{";
+					pontosJSON += "\"Id\": " + ponto.getId() + ", ";
+					pontosJSON += "\"Latitude\": " + ponto.getLatitude1() + ", ";
+					pontosJSON += "\"Longitude\": " + ponto.getLongitude1();
+					pontosJSON += "}";
+				} else {
+					pontosJSON += "{";
+					pontosJSON += "\"Id\": " + ponto.getId() + ", ";
+					pontosJSON += "\"Latitude\": " + ponto.getLatitude1() + ", ";
+					pontosJSON += "\"Longitude\": " + ponto.getLongitude1();
+					pontosJSON += "},";
+				}
+			} else {
+				formaDao.remover(ponto);
+			}
+		}
+		pontosJSON += "]";
+		model.addAttribute("pontos", pontosJSON);
+		return "mapa/pontos";
+	}
+
+	@RequestMapping("removerPonto")
+	public void removerPonto(Forma forma, HttpServletResponse response) {
+		formaDao.remover(forma);
+		response.setStatus(200);
+	}
+
+	@RequestMapping("adicionarTraco")
+	public String adicionarTraco(@Valid Forma forma,BindingResult result) {
+		if (result.hasErrors() || forma.getEndereco2().equals("") || forma.getEndereco2() == null) {
+			return "mapa/tracoErro";
+		}
+		formaDao.salvar(forma);
+		return "mapa/tracoAdicionado";
+	}
+
+	@RequestMapping("mostrarTodosTracos")
+	public String mostrarTodosTracos(Model model) {
+		List<Forma> tracos = formaDao.getListaTraco();
+		String tracosJSON;
+		int i = 0;
+		tracosJSON = "[";
+		for (Forma traco : tracos) {
+			i++;
+			if (tracos.size() == i) {
+				tracosJSON += "{";
+				tracosJSON += "\"Id\": " + traco.getId() + ", ";
+				tracosJSON += "\"Endereco1\": \"" + traco.getEndereco1() + "\", ";
+				tracosJSON += "\"Latitude1\": " + traco.getLatitude1() + ", ";
+				tracosJSON += "\"Longitude1\": " + traco.getLongitude1() + ", ";
+				tracosJSON += "\"Endereco2\": \"" + traco.getEndereco2() + "\", ";
+				tracosJSON += "\"Latitude2\": " + traco.getLatitude2() + ", ";
+				tracosJSON += "\"Longitude2\": " + traco.getLongitude2();
+				tracosJSON += "}";
+			} else {
+				tracosJSON += "{";
+				tracosJSON += "\"Id\": " + traco.getId() + ", ";
+				tracosJSON += "\"Endereco1\": \"" + traco.getEndereco1() + "\", ";
+				tracosJSON += "\"Latitude1\": " + traco.getLatitude1() + ", ";
+				tracosJSON += "\"Longitude1\": " + traco.getLongitude1() + ", ";
+				tracosJSON += "\"Endereco2\": \"" + traco.getEndereco2() + "\", ";
+				tracosJSON += "\"Latitude2\": " + traco.getLatitude2() + ", ";
+				tracosJSON += "\"Longitude2\": " + traco.getLongitude2();
+				tracosJSON += "},";
+			}
+		}
+		tracosJSON += "]";
+		model.addAttribute("tracos", tracosJSON);
+		return "mapa/tracos";
+	}
+
+	@RequestMapping("removerTraco")
+	public void removerTraco(Forma forma, HttpServletResponse response) {
+		formaDao.remover(forma);
+		response.setStatus(200);
+	}
+}
