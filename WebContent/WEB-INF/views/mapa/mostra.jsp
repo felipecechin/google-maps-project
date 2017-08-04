@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -79,7 +80,7 @@ body {
 									<td><img src="<c:url value="/img/ponto.png"/>"></td>
 									<td>(PONTO)</td>
 									<td><input type="radio" name="tipo" value=""
-										onclick="recarregarPagina('ponto'); trocarFormulario('ponto');"></td>
+										onclick="recarregarPagina('ponto');"></td>
 								</tr>
 							</table>
 						</td>
@@ -89,7 +90,7 @@ body {
 									<td><img src="<c:url value="/img/traco.png"/>"> (TRAÇO)
 									</td>
 									<td><input type="radio" name="tipo" value=""
-										onclick="recarregarPagina('traco'); trocarFormulario('traco');"></td>
+										onclick="recarregarPagina('traco');"></td>
 								</tr>
 							</table>
 						</td>
@@ -110,24 +111,24 @@ body {
 								<td><img src="<c:url value="/img/ponto.png"/>"></td>
 							</tr>
 						</table>
-						<form action="adicionarPonto" method="post" id="formPontoform">
-							<input type="hidden" name="id" value="" id="txtId">
-							<input type="hidden" name="tipo" value="ponto">
+						<form:form action="adicionarPonto" method="post" id="formPontoform" modelAttribute="Forma">
+							<form:hidden path="id" value="" id="txtId"/>
+							<form:hidden path="tipo" value="ponto" />
 							<table align="center">
 								<tr>
-									<td>Endereço:</td>
-									<td align="right"><input type="text" name="endereco1" id="txtEndereco"
-										class="campo" readonly></td>
+									<td><form:label path="endereco1">Endereço:</form:label></td>
+									<td align="right"><form:input path="endereco1" id="txtEndereco"
+										class="campo" readonly=""/></td>
 								</tr>
 								<tr>
-									<td>Latitude:</td>
-									<td align="right"><input type="text" name="latitude1" id="txtLatitude"
-										class="campo" readonly></td>
+									<td><form:label path="latitude1">Latitude:</form:label></td>
+									<td align="right"><form:input path="latitude1" id="txtLatitude"
+										class="campo" readonly=""/></td>
 								</tr>
 								<tr>
-									<td>Longitude:</td>
-									<td align="right"><input type="text" name="longitude1" id="txtLongitude"
-										class="campo" readonly></td>
+									<td><form:label path="longitude1">Longitude:</form:label></td>
+									<td align="right"><form:input path="longitude1" id="txtLongitude"
+										class="campo" readonly=""/></td>
 								</tr>
 								<tr>
 									<td align="center" colspan="2">
@@ -154,7 +155,7 @@ body {
 									</td>
 								</tr>
 							</table>
-						</form>
+						</form:form>
 					</td>
 				</tr>
 			</table>
@@ -172,27 +173,27 @@ body {
 								<td><img src="<c:url value="/img/traco.png"/>"></td>
 							</tr>
 						</table>
-						<form action="adicionarTraco" method="post" id="formTracoform">
-							<input type="hidden" name="id" value="" id="txtIdTraco">
-							<input type="hidden" name="tipo" value="traco">
+						<form:form action="adicionarTraco" method="post" id="formTracoform" modelAttribute="Forma">
+							<form:hidden path="id" value="" id="txtIdTraco"/>
+							<form:hidden path="tipo" value="traco"/>
 							<table align="center" id="formExtremidade1">
 								<tr>
 									<td colspan="2" style="text-align: center;">EXTREMIDADE 1</td>
 								</tr>
 								<tr>
-									<td>Endereço:</td>
-									<td align="right"><input type="text" name="endereco1"
-										id="txtEnderecoTraco1" class="campo" readonly></td>
+									<td><form:label path="endereco1">Endereço:</form:label></td>
+									<td align="right"><form:input path="endereco1"
+										id="txtEnderecoTraco1" class="campo" readonly=""/></td>
 								</tr>
 								<tr>
-									<td>Latitude:</td>
-									<td align="right"><input type="text" name="latitude1"
-										id="txtLatitudeTraco1" class="campo" readonly></td>
+									<td><form:label path="latitude1">Latitude:</form:label></td>
+									<td align="right"><form:input path="latitude1"
+										id="txtLatitudeTraco1" class="campo" readonly=""/></td>
 								</tr>
 								<tr>
-									<td>Longitude:</td>
-									<td align="right"><input type="text" name="longitude1"
-										id="txtLongitudeTraco1" class="campo" readonly>
+									<td><form:label path="longitude1">Longitude:</form:label></td>
+									<td align="right"><form:input path="longitude1"
+										id="txtLongitudeTraco1" class="campo" readonly=""/>
 										</td>
 								</tr>
 								<tr>
@@ -231,19 +232,19 @@ body {
 									<td colspan="2" style="text-align: center;">EXTREMIDADE 2</td>
 								</tr>
 								<tr>
-									<td>Endereço:</td>
-									<td align="right"><input type="text" name="endereco2"
-										id="txtEnderecoTraco2" class="campo" readonly></td>
+									<td><form:label path="endereco2">Endereço:</form:label></td>
+									<td align="right"><form:input path="endereco2"
+										id="txtEnderecoTraco2" class="campo" readonly=""/></td>
 								</tr>
 								<tr>
-									<td>Latitude:</td>
-									<td align="right"><input type="text" name="latitude2"
-										id="txtLatitudeTraco2" class="campo" readonly></td>
+									<td><form:label path="latitude2">Latitude:</form:label></td>
+									<td align="right"><form:input path="latitude2"
+										id="txtLatitudeTraco2" class="campo" readonly=""/></td>
 								</tr>
 								<tr>
-									<td>Longitude:</td>
-									<td align="right"><input type="text" name="longitude2"
-										id="txtLongitudeTraco2" class="campo" readonly></td>
+									<td><form:label path="longitude2">Longitude:</form:label></td>
+									<td align="right"><form:input path="longitude2"
+										id="txtLongitudeTraco2" class="campo" readonly=""/></td>
 								</tr>
 								<tr>
 								<td style="text-align: center;" colspan="2">
@@ -275,7 +276,7 @@ body {
 									</td>
 								</tr>
 							</table>
-						</form></td>
+						</form:form></td>
 				</tr>
 			</table>
 			</td>

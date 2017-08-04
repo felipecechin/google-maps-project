@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import br.com.mapa.dao.FormaDao;
 import br.com.mapa.model.Forma;
@@ -23,11 +24,12 @@ public class MapaController {
 	FormaDao formaDao;
 
 	@RequestMapping("mostrarMapa")
-	public String mostrarMapa(String form, Model model) {
+	public ModelAndView mostrarMapa(String form) {
+		ModelAndView mv = new ModelAndView("mapa/mostra","Forma",new Forma());
 		if (form != null && !form.equals("")) {
-			model.addAttribute("form", form);
+			mv.addObject("form", form);
 		}
-		return "mapa/mostra";
+		return mv;
 	}
 
 	@RequestMapping("adicionarPonto")
@@ -48,17 +50,13 @@ public class MapaController {
 		for (Forma ponto : pontos) {
 			i++;
 			if (!ponto.getEndereco1().equals("") && ponto.getEndereco1() != null) {
+				pontosJSON += "{";
+				pontosJSON += "\"Id\": " + ponto.getId() + ", ";
+				pontosJSON += "\"Latitude\": " + ponto.getLatitude1() + ", ";
+				pontosJSON += "\"Longitude\": " + ponto.getLongitude1();
 				if (pontos.size() == i) {
-					pontosJSON += "{";
-					pontosJSON += "\"Id\": " + ponto.getId() + ", ";
-					pontosJSON += "\"Latitude\": " + ponto.getLatitude1() + ", ";
-					pontosJSON += "\"Longitude\": " + ponto.getLongitude1();
 					pontosJSON += "}";
 				} else {
-					pontosJSON += "{";
-					pontosJSON += "\"Id\": " + ponto.getId() + ", ";
-					pontosJSON += "\"Latitude\": " + ponto.getLatitude1() + ", ";
-					pontosJSON += "\"Longitude\": " + ponto.getLongitude1();
 					pontosJSON += "},";
 				}
 			} else {

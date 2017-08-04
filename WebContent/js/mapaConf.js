@@ -48,6 +48,7 @@ function myMap() {
 						'id' : this.id
 					}, function() {
 						alert("Ponto removido com sucesso");
+						window.location.href = "mostrarMapa";
 					});
 				}
 			});
@@ -155,6 +156,7 @@ function myMap() {
 						'id' : this.id
 					}, function() {
 						alert("Traço removido com sucesso");
+						window.location.href = "mostrarMapa";
 					});
 				}
 			});
