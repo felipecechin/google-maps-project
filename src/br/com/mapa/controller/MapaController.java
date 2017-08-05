@@ -91,25 +91,17 @@ public class MapaController {
 		tracosJSON = "[";
 		for (Forma traco : tracos) {
 			i++;
+			tracosJSON += "{";
+			tracosJSON += "\"Id\": " + traco.getId() + ", ";
+			tracosJSON += "\"Endereco1\": \"" + traco.getEndereco1() + "\", ";
+			tracosJSON += "\"Latitude1\": " + traco.getLatitude1() + ", ";
+			tracosJSON += "\"Longitude1\": " + traco.getLongitude1() + ", ";
+			tracosJSON += "\"Endereco2\": \"" + traco.getEndereco2() + "\", ";
+			tracosJSON += "\"Latitude2\": " + traco.getLatitude2() + ", ";
+			tracosJSON += "\"Longitude2\": " + traco.getLongitude2();
 			if (tracos.size() == i) {
-				tracosJSON += "{";
-				tracosJSON += "\"Id\": " + traco.getId() + ", ";
-				tracosJSON += "\"Endereco1\": \"" + traco.getEndereco1() + "\", ";
-				tracosJSON += "\"Latitude1\": " + traco.getLatitude1() + ", ";
-				tracosJSON += "\"Longitude1\": " + traco.getLongitude1() + ", ";
-				tracosJSON += "\"Endereco2\": \"" + traco.getEndereco2() + "\", ";
-				tracosJSON += "\"Latitude2\": " + traco.getLatitude2() + ", ";
-				tracosJSON += "\"Longitude2\": " + traco.getLongitude2();
 				tracosJSON += "}";
 			} else {
-				tracosJSON += "{";
-				tracosJSON += "\"Id\": " + traco.getId() + ", ";
-				tracosJSON += "\"Endereco1\": \"" + traco.getEndereco1() + "\", ";
-				tracosJSON += "\"Latitude1\": " + traco.getLatitude1() + ", ";
-				tracosJSON += "\"Longitude1\": " + traco.getLongitude1() + ", ";
-				tracosJSON += "\"Endereco2\": \"" + traco.getEndereco2() + "\", ";
-				tracosJSON += "\"Latitude2\": " + traco.getLatitude2() + ", ";
-				tracosJSON += "\"Longitude2\": " + traco.getLongitude2();
 				tracosJSON += "},";
 			}
 		}
